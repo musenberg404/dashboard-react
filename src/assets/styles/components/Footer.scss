@@ -1,0 +1,27 @@
+@import "../Vars.scss";
+// @import "../Media.scss";
+
+
+.footer {
+  grid-area: footer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  color: $color-abbey;
+  background-color: $color-white;
+
+  &__copyright {
+    color: $color-java;
+  }
+
+  &__icon {
+    color: $color-cinnabar;
+  }
+
+  &__signature {
+    color: $color-java;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,54 @@
+@import "../Vars.scss";
+@import "../Media.scss";
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.text-light {
+  font-weight: 300;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.row {
+  display: flex;
+
+  &--align-v-center {
+    align-items: center;
+  }
+
+  &--align-h-center {
+    justify-content: center;
+  }
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 100%; // Charts responsiveness won't work with fr units
+  grid-template-rows: $height-header 1fr $height-footer;
+  grid-template-areas:
+    'header'
+    'main'
+    'footer';
+  height: 100vh;
+  overflow-x: hidden; // Prevent overflow scroll from hidden sidenav
+
+  &--noscroll {
+    overflow-y: hidden;
+  }
+  
+}
+

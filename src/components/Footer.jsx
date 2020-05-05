@@ -8,7 +8,7 @@ const Footer = () => (
       <span className="footer__copyright">&copy;</span>
       2019 Enjoy it!{' '}
     </p>
-    <p>By jbarriospd &amp; afelipelds</p>
+    <p>By an &amp; </p>
   </footer>
 );
 

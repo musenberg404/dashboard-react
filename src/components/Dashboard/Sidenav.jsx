@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import '../../assets/styles/components/Dashboard/Sidenav.scss';
+import React, { useState } from "react";
+import { DASHBOARD_OPTIONS } from "../../constants/Dashboard";
+import "../../assets/styles/components/Dashboard/Sidenav.scss";
 
 const Sidenav = () => {
+  const [activeOptions, setActiveOptions] = useState([]);
 
-  const [isActive, setIsActive] = useState(false);
-
-  function toogleMenu() {
-    setIsActive(!isActive);
-  }
+  const toggleMenu = (i) => {
+    let updatedOptions = [];
+    if (activeOptions.includes(i)) {
+      updatedOptions = activeOptions.filter((option) => option !== i);
+    } else {
+      updatedOptions = [...activeOptions, i];
+    }
+    setActiveOptions(updatedOptions);
+  };
 
   return (
     <aside className="sidenav">
@@ -15,7 +21,7 @@ const Sidenav = () => {
         <i className="fas fa-microphone-alt"></i>
         <a className="sidenav__brand-link" href="#">
           RichardKJS
-      </a>
+        </a>
         <i className="fas fa-times sidenav__brand-close"></i>
       </div>
       <div className="sidenav__profile">
@@ -24,65 +30,52 @@ const Sidenav = () => {
       </div>
       <div className="row row--align-v-center row--align-h-center">
         <ul className="navList">
-          <li className="navList__heading">
-            álbumes<i className="fas fa-compact-disc"></i>
-          </li>
-          <li>
-            <div className={isActive ? 'navList__subheading row row--align-v-center navList__subheading--open' : 'navList__subheading row row--align-v-center '} onClick={toogleMenu}>
-              <span className="navList__subheading-icon">
+          {DASHBOARD_OPTIONS.map(({ title, secondLevel }, i) => (
+            <div key={`dashboardOption-${i}`}>
+              <li className="navList__heading">
+                {title}
                 <i className="fas fa-compact-disc"></i>
-              </span>
-              <span className="navList__subheading-title">álbum 1</span>
+              </li>
+              {secondLevel &&
+                secondLevel.length &&
+                secondLevel.map(({ title, options }, j) => (
+                  <li key={`dashboardOption-${i}-${j}`}>
+                    <div
+                      className={
+                        activeOptions.includes(j)
+                          ? "navList__subheading row row--align-v-center navList__subheading--open"
+                          : "navList__subheading row row--align-v-center "
+                      }
+                      onClick={() => toggleMenu(j)}
+                    >
+                      <span className="navList__subheading-icon">
+                        <i className="fas fa-compact-disc"></i>
+                      </span>
+                      <span className="navList__subheading-title">{title}</span>
+                    </div>
+                    <ul
+                      className={
+                        activeOptions.includes(j)
+                          ? "subList"
+                          : "subList subList--hidden"
+                      }
+                    >
+                      {options.map(({ title }, k) => (
+                        <li
+                          className="subList__item"
+                          key={`dashboardOption-${i}-${j}-${k}`}
+                        >
+                          {title}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
             </div>
-            <ul className={isActive ? 'subList' : 'subList subList--hidden'}>
-              <li className="subList__item">podcast 1</li>
-              <li className="subList__item">podcast 2</li>
-            </ul>
-          </li>
-          <li>
-            <div className="navList__subheading row row--align-v-center">
-              <span className="navList__subheading-icon">
-                <i className="fas fa-compact-disc"></i>
-              </span>
-              <span className="navList__subheading-title">álbum 2</span>
-            </div>
-            <ul className="subList subList--hidden">
-              <li className="subList__item">podcast 1</li>
-              <li className="subList__item">podcast 2</li>
-              <li className="subList__item">podcast 3</li>
-            </ul>
-          </li>
-          <li>
-            <div className="navList__subheading row row--align-v-center">
-              <span className="navList__subheading-icon">
-                <i className="fas fa-compact-disc"></i>
-              </span>
-              <span className="navList__subheading-title">álbum 3</span>
-            </div>
-            <ul className="subList subList--hidden">
-              <li className="subList__item">podcast 1</li>
-              <li className="subList__item">podcast 2</li>
-            </ul>
-          </li>
-
-          <li className="navList__heading">
-            mis acciones<i className="fas fa-mouse-pointer"></i>
-          </li>
-          <li>
-            <div className="navList__subheading row row--align-v-center">
-              <span className="navList__subheading-icon">
-                <i className="fas fa-chart-bar"></i>
-              </span>
-              <span className="navList__subheading-title">analitica</span>
-            </div>
-            <ul className="subList subList--hidden">
-              <li className="subList__item">Visualizaciones</li>
-              <li className="subList__item">subs</li>
-            </ul>
-          </li>
+          ))}
         </ul>
       </div>
     </aside>
   );
-}
+};
 export default Sidenav;
